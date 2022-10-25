@@ -5,13 +5,12 @@
 
 class Convert {
 	private:
-		char *mRawString;
 		char *mActualChar;
 		int *mActualInt;
 		float *mActualFloat;
 		double *mActualDouble;
 
-		Convert();
+		Convert();/* no use*/
 
 	public:
 		Convert(char *input);

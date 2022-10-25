@@ -2,6 +2,21 @@
 #include <cstdlib>//srand, rand
 #include "Class.hpp"
 
+Base *generate(void);
+void identify(Base *p);
+void identify(const Base &p);
+
+int main() {
+	Base *whoAmI = generate();
+	std::cout << "you are "; identify(whoAmI);
+
+	Base *whoAmI2 = generate();
+	std::cout << "you are "; identify(*whoAmI2);
+
+	delete whoAmI;
+	delete whoAmI2;
+}
+
 Base *generate(void) {
 		srand(time(NULL));
 		switch (std::rand() % 3) {
@@ -41,15 +56,4 @@ void identify(const Base &p) {
 			(void)dynamic_cast<const C &>(p);
 			std::cout << "C" << std::endl;
 	} catch (std::exception &e) {}
-}
-
-int main() {
-	Base *whoAmI = generate();
-	std::cout << "you are "; identify(whoAmI);
-
-	Base *whoAmI2 = generate();
-	std::cout << "you are "; identify(*whoAmI2);
-
-	delete whoAmI;
-	delete whoAmI2;
 }

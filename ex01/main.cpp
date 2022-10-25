@@ -4,13 +4,8 @@
 
 //typedef unsigned long uintptr_t
 
-std::uintptr_t serialize(Data *ptr) {
-	return reinterpret_cast<std::uintptr_t>(ptr);
-}
-
-Data *deserialize(std::uintptr_t raw) {
-	return reinterpret_cast<Data *>(raw);
-}
+std::uintptr_t serialize(Data *ptr);
+Data *deserialize(std::uintptr_t raw);
 
 int main() {
 	Data data;
@@ -26,4 +21,12 @@ int main() {
 	std::cout \
 	<< "\naddress : " << newptr \
 	<< "\nvalue : " << newptr->member << std::endl;
+}
+
+std::uintptr_t serialize(Data *ptr) {
+	return reinterpret_cast<std::uintptr_t>(ptr);
+}
+
+Data *deserialize(std::uintptr_t raw) {
+	return reinterpret_cast<Data *>(raw);
 }

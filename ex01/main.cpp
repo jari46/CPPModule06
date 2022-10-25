@@ -2,6 +2,8 @@
 #include <cstdint>
 #include "Data.hpp"
 
+//typedef unsigned long uintptr_t
+
 std::uintptr_t serialize(Data *ptr) {
 	return reinterpret_cast<std::uintptr_t>(ptr);
 }
@@ -18,8 +20,8 @@ int main() {
 	<< "\naddress : " << &data \
 	<< "\nvalue : " << data.member << std::endl;
 
-	std::uintptr_t tempptr = serialize(&data);
-	Data *newptr = deserialize(tempptr);
+	std::uintptr_t tempptr = serialize(&data);//It can typecast any pointer to any other data type.
+	Data *newptr = deserialize(tempptr);//pointer data type should be same as original data type.
 
 	std::cout \
 	<< "\naddress : " << newptr \

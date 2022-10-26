@@ -16,13 +16,12 @@ Convert::Convert(char *input)
 
 	if (input != endptr) {
 		// 1. float, double type
-		if (std::string(input).find('.') == true || std::isnan(temp) == true || std::isinf(temp) == true || \
+		if (std::string(input).find('.') != std::string::npos || std::isnan(temp) == true || std::isinf(temp) == true || \
 			temp < std::numeric_limits<int>::min() || std::numeric_limits<int>::max() < temp) {
-			if (*endptr != 'f' || \
-			temp < std::numeric_limits<float>::min() || std::numeric_limits<float>::max() < temp)
-				mActualDouble = new double(static_cast<double>(std::strtod(input, NULL)));
-			else
+			if (*endptr == 'f')
 				mActualFloat = new float(static_cast<float>(std::strtod(input, NULL)));
+			else
+				mActualDouble = new double(static_cast<double>(std::strtod(input, NULL)));
 		}
 		// 2. int type
 		else
@@ -55,14 +54,18 @@ void Convert::displayToChar() const {
 			std::cout << "Non displayable";
 	}
 	else if (mActualFloat != NULL) {
-			if (std::isprint(*mActualFloat))
-			std::cout << "'" << static_cast<char>(*mActualFloat) << "'";
+		if (std::isprint(*mActualFloat))
+		std::cout << "'" << static_cast<char>(*mActualFloat) << "'";
+		else if (std::isnan(*mActualFloat) == true || std::isinf(*mActualFloat) == true)
+			std::cout << "impossible";
 		else
 			std::cout << "Non displayable";
 	}
 	else/* (mActualDouble != NULL) */ {
-			if (std::isprint(*mActualDouble))
-			std::cout << "'" << static_cast<char>(*mActualDouble) << "'";
+		if (std::isprint(*mActualDouble))
+		std::cout << "'" << static_cast<char>(*mActualDouble) << "'";
+		else if (std::isnan(*mActualDouble) == true || std::isinf(*mActualDouble) == true)
+			std::cout << "impossible";
 		else
 			std::cout << "Non displayable";
 	}
@@ -82,14 +85,14 @@ void Convert::displayToInt() const {
 	else if (mActualFloat != NULL) {
 		if (std::isnan(*mActualFloat) == true || std::isinf(*mActualFloat) == true || \
 			*mActualFloat < std::numeric_limits<int>::min() || std::numeric_limits<int>::max() < *mActualFloat)
-			std::cout << "Impossible";
+			std::cout << "impossible";
 		else
 			std::cout << static_cast<int>(*mActualFloat);
 	}
 	else/* (mActualDouble != NULL) */ {
 		if (std::isnan(*mActualDouble) == true || std::isinf(*mActualDouble) == true || \
 			*mActualDouble < std::numeric_limits<int>::min() || std::numeric_limits<int>::max() < *mActualDouble)
-			std::cout << "Impossible";
+			std::cout << "impossible";
 		else
 			std::cout << static_cast<int>(*mActualDouble);
 	}
@@ -101,18 +104,13 @@ void Convert::displayToFloat() const {
 	std::cout << std::fixed << std::setprecision(1);
 
 	if (mActualChar != NULL)
-		std::cout << static_cast<float>(*mActualChar);
+		std::cout << static_cast<float>(*mActualChar) << "f" << std::endl;
 	else if (mActualInt != NULL)
-		std::cout << static_cast<float>(*mActualInt);
+		std::cout << static_cast<float>(*mActualInt) << "f" << std::endl;
 	else if (mActualFloat != NULL)
-		std::cout << static_cast<float>(*mActualFloat);
+		std::cout << static_cast<float>(*mActualFloat) << "f" << std::endl;
 	else/* (mActualDouble != NULL) */
-		if (std::isnan(*mActualDouble) == true || std::isinf(*mActualDouble) == true || \
-			*mActualDouble < std::numeric_limits<float>::min() || std::numeric_limits<float>::max() < *mActualDouble)
-			std::cout << "Impossible";
-		else
-			std::cout << static_cast<float>(*mActualDouble);
-	std::cout << "f" << std::endl;
+			std::cout << static_cast<float>(*mActualDouble) << "f" << std::endl;
 }
 
 void Convert::displayToDouble() const {
